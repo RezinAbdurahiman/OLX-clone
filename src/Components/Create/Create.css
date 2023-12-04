@@ -1,0 +1,58 @@
+.centerDiv {
+    border: 1px solid black;
+    width: max-content;
+    padding: 50px;
+    position:fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+  }
+  .input {
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    outline-color: transparent;
+  }
+  
+  .uploadBtn {
+    margin-top: 30px;
+    width: 100%;
+    height: 48px;
+    /* border-color: transparent; */
+    background-color: #002f34;
+    color: whitesmoke;
+    font-weight: 900;
+  }
+  .uploadBtn:hover {
+    background-color: white;
+    color: #002f34;
+    border: 2px solid #002f34;
+  }
+  
+  .imageArea{
+    display: flexbox;
+    max-width: 500px;
+    border: 1px solid black;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px ;
+  }
+.mainImage{
+  min-height: 150px;
+  min-width: 100px;
+  max-height: 300px;
+  max-width: 200px;
+  margin: 10px;
+}
+  .imageArea::-webkit-scrollbar{
+    display: none;
+  }
+  .imageUploaded{
+    max-width: 50px;
+    max-height: 50px;
+    margin: 10px;  
+    border: 0.5px solid black; 
+  }
+  .imageUploaded:hover{
+    transform: scale(1.25);
+  }
