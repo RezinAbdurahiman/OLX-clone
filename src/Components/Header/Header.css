@@ -28,7 +28,9 @@
   border-color: #23e5db;
   outline-color: #23e5db;
 }
-
+.brandName:hover{
+  cursor: pointer;
+}
 .placeSearch input {
   border-color: transparent;
   outline-color: transparent;

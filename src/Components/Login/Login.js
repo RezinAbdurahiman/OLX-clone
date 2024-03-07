@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import Logo from '../../olx-logo.png';
 import './Login.css';
-import { firebaseContext, loadingContext, navigateContext } from '../../store/context';
+import { authContext, firebaseContext, loadingContext, navigateContext } from '../../store/context';
 
 function Login() {
 
@@ -11,11 +11,13 @@ function Login() {
   const [password, setPassword] = useState("")
   const {loading, setLoading} = useContext(loadingContext)
   const {navigate} = useContext(navigateContext)
+  const {setUser} = useContext(authContext)
   const handleClick = (e)=>{
     e.preventDefault()
     setLoading(true)
     firebase.auth().signInWithEmailAndPassword(email, password).then((user)=>{
       setLoading(false)
+      setUser(user)
       navigate("/")
 
     }).catch((error)=>{
@@ -57,7 +59,7 @@ function Login() {
           <br />
           <button>Login</button>
         </form>
-        <a>Signup</a>
+        <a onClick={()=>{navigate('/signup')}}>Signup</a>
       </div>
     </div>
   );

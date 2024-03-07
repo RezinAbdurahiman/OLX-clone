@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
 import { navigateContext, firebaseContext, loadingContext } from '../../store/context';
-import 'firebase/auth'
+import 'firebase/auth';
 import 'firebase/firestore'
 export default function Signup() {
 
@@ -13,7 +13,7 @@ export default function Signup() {
   const [email, setEmail]=  useState('')
   const [phone, setPhone]=  useState('')
   const [password, setPassword]=  useState('')
-  console.log(firebase.auth)
+
   const handleClick = (e)=> {
 
   e.preventDefault()
@@ -89,7 +89,7 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a>Login</a>
+        <a onClick={()=>{navigate('/login')}}>Login</a>
       </div>
     </div>
   );

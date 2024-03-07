@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/Heart';
 import './Post.css';
-import { authContext, favoriteContext, firebaseContext, loadingContext, productContext } from '../../store/context';
+import { authContext, favoriteContext, firebaseContext, loadingContext, navigateContext, productContext, viewContext } from '../../store/context';
 import Loading from '../Loading/Loading';
 
 function Posts() {
@@ -9,6 +9,8 @@ function Posts() {
   const {setLoading} = useContext(loadingContext)
   const {user} = useContext(authContext)
   const {userFavorites, setUserFavorites} = useContext(favoriteContext)
+  const {viewProduct, setViewProduct} = useContext(viewContext)
+  const {navigate} = useContext(navigateContext)
  
   const {products,setProducts} = useContext(productContext)
   useEffect(()=>{
@@ -64,7 +66,7 @@ function Posts() {
         <div className={view? "moreView": "cards"}>
          { 
          products.map((product, index) => (
-          <div className="card" key={product.id}>
+          <div className="card" key={product.id} onClick={()=>{setViewProduct(product); navigate('/view')}}>
             <div className="favorite" onClick={async () => {
   if (!favorites[index]) {
     await setUserFavorites(prevUserFavorites => prevUserFavorites.concat(product));
@@ -84,8 +86,8 @@ function Posts() {
             </div>
             <div className="content">
               <p className="rate">&#x20B9; {product.price}</p>
-              <span className="kilometer">{product.category}</span>
-              <p className="name">{product.name}</p>
+              <span className="kilometer">{product.name}</span>
+              <p className="name">{product.category}</p>
             </div>
             <div className="date">
               <span>{product.createdAt}</span>

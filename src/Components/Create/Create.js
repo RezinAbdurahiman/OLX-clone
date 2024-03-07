@@ -1,18 +1,21 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react';
 import './Create.css';
 import Header from '../Header/Header';
-import { authContext, firebaseContext, loadingContext } from '../../store/context';
+import { authContext, firebaseContext, loadingContext, navigateContext } from '../../store/context';
 
 const Create = () => {
+  useEffect(()=>{console.log(user)},[])
   const date = new Date()
   const [image, setImage] = useState(null)
   const [main, setMain] = useState(null)
   const [name, setName]= useState('')
+  const [location, setLocation] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
   const {loading, setLoading} = useContext(loadingContext)
   const {firebase} = useContext(firebaseContext)
   const {user} = useContext(authContext)
+  const {navigate} = useContext(navigateContext)
   const handleClick = async(e)=> {
     try {
       e.preventDefault()
@@ -29,7 +32,9 @@ const Create = () => {
   
       // Continue with the rest of your code
       firebase.firestore().collection('products').add({
-        userId : user.uid,
+        seller : user.displayName,
+        phoneNumber: user.userPhone,
+        location,
         name,
         category,
         price,
@@ -39,6 +44,7 @@ const Create = () => {
       });
   
       setLoading(false);
+      navigate('/')
     } catch (error) {
       console.error('Error uploading images:', error);
       setLoading(false); 
@@ -61,6 +67,16 @@ const Create = () => {
               onChange={(e)=>setName(e.target.value)}
             />
             <br />
+            <br/>
+            <input
+              className="input"
+              type="text"
+              id="fname"
+              name="Location"
+              placeholder='City/State'
+              onChange={(e)=>setLocation(e.target.value)}
+            />
+            <br/>
             <br />
             <input
               className="input"

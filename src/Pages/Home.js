@@ -5,7 +5,7 @@ import Banner from '../Components/Banner/Banner';
 
 import Posts from '../Components/Posts/Posts';
 import Footer from '../Components/Footer/Footer';
-import { authContext, favoriteContext, firebaseContext, loadingContext } from '../store/context';
+import { authContext, favoriteContext, firebaseContext, loadingContext, navigateContext, viewContext } from '../store/context';
 import Loading from '../Components/Loading/Loading';
 
 function Home(props) {
@@ -13,14 +13,21 @@ function Home(props) {
   const {firebase} = useContext(firebaseContext)
   const {user,setUser} = useContext(authContext)
   const {userFavorites,setUserFavorites} = useContext(favoriteContext)
+  const {setViewProduct} = useContext(viewContext)
+  const {navigate} = useContext(navigateContext)
   useEffect(() => {
+    if (user) {
    firebase.auth().onAuthStateChanged((user)=>{
-    setUser(user)
-   })
-  if(user){
-    // loadFavorites()
-  }
-  }, [])
+    firebase.firestore().collection('users').where("userId", "==", user.uid).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setUser(doc.data());
+        setViewProduct(null)
+  
+      
+    })})})}
+  else{
+    navigate('/login')
+  }},[])
 
 const loadFavorites =()=>{ 
    firebase.firestore().collection('users').where("userId", "==", user.uid).get().then((querySnapshot) => {
@@ -34,12 +41,12 @@ const loadFavorites =()=>{
   
   return (
     <div >
-      {loading? <Loading/> : <div className='homeParentDiv'>
+      {loading? <Loading/> : user? <div className='homeParentDiv'>
         <Header />
         <Banner />
         <Posts />
         <Footer />
-        </div>}
+        </div>: ()=>{navigate('/login')} }
     </div>
   
   );
